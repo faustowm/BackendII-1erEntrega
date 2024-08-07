@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 class ProductManager {
   constructor() {
-    this.path = "products.json";
+    this.path = "src/data/products.json";
     this.products = [];
   }
 

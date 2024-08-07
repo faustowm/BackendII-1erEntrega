@@ -134,75 +134,87 @@ button:hover {
 
 /*Homehandlebars*/
 
-/* Estilos generales */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #ff6f61, #ffcc70);
+    color: white;
+    text-align: center;
+    padding: 20px 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-title {
+    margin: 0;
+    font-size: 2.5em; 
+    font-weight: bold;
+}
+
+
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+}
+
+.product-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-auto-rows: minmax(200px, auto); 
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.product-item {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 20px;
-    width: 100%;
-    text-align: center;
-}
-
-h1 {
-    margin: 0;
-    font-size: 2.5em;
-}
-
-/* Estilos del contenedor principal */
-main {
-    padding: 20px;
-    width: 100%;
-    max-width: 1200px;
-}
-
-/* Estilos de la lista de productos */
-.product-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.product-item {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 300px;
-    text-align: center;
-    padding: 20px;
-    transition: transform 0.2s;
-}
-
 .product-item:hover {
     transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .product-item h2 {
-    font-size: 1.5em;
-    margin: 0.5em 0;
+    color: #ff6f61;
+    font-size: 1.8em;
+    margin-bottom: 10px;
 }
 
 .product-item p {
+    color: #333;
     font-size: 1em;
-    margin: 0.5em 0;
+    margin: 5px 0;
 }
 
 .product-image {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-top: 10px;
 }
+

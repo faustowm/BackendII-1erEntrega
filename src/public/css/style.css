@@ -1,42 +1,208 @@
+/*Realtimeproducts*/
+
 body {
-    background-color: black;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-
-.title{
-    text-transform: uppercase;
+.title {
+    color: #333;
     text-align: center;
-    color: goldenrod;
-    
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
 }
-.productsContainer{
-    border: 1rem solid;
-    background-color: rgb(155, 155, 155);
+
+.productsContainer {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 2rem;
+    justify-content: center;
+    gap: 20px;
+}
+
+.productCard {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.productCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.productImage {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.productTitle {
+    font-size: 20px;
+    color: #007bff;
+    margin: 0 0 10px;
+}
+
+.productDescription {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.productPrice {
+    font-size: 18px;
+    color: #28a745;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.productCategory {
+    font-size: 14px;
+    color: #ff5733;
+    margin-bottom: 10px;
+}
+
+
+/*Addproduct*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/*Homehandlebars*/
+
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    width: 100%;
     text-align: center;
 }
-.card{
-    border: 2px solid black;
-    margin: 1rem;
-    padding: 1rem;
-    text-transform: uppercase;
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
 }
-.button{
-    background-color: goldenrod;
-    text-decoration: underline;
-    text-transform: uppercase;
+
+/* Estilos del contenedor principal */
+main {
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
 }
-.button:hover{
-    background-color: yellow;
-}
-.form{
+
+/* Estilos de la lista de productos */
+.product-list {
+    list-style: none;
+    padding: 0;
     display: flex;
-    justify-content: space-around;
-    color: white;
-    text-transform: uppercase;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.product-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.2s;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+}
+
+.product-item h2 {
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+.product-item p {
+    font-size: 1em;
+    margin: 0.5em 0;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
 }

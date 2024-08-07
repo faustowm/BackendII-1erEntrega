@@ -7,18 +7,22 @@
     <title>Velas</title>
 </head>
 <body>
-    <h1>Productos disponibles</h1>
-    <ul>
-        {{#each productos}}
-        <li>
-            <h2>{{this.title}}</h2>
-            <p>{{this.description}}</p>
-            <p>Price: {{this.price}}</p>
-            <p>Stock: {{this.stock}}</p>
-            <img src="{{this.thumbnail}}" alt="{{this.title}}" width="100">
-        </li>
-        {{/each}}
-    </ul>
-    <script src="../public/css/style.css"></script>
+    <header>
+        <h1>Productos disponibles</h1>
+    </header>
+    <main>
+        <ul class="product-list">
+            {{#each productos}}
+            <li class="product-item">
+                <h2>{{this.title}}</h2>
+                <p>{{this.description}}</p>
+                <p>Precio: ${{this.price}}</p>
+                <p>Stock: {{this.stock}}</p>
+                <img src="{{this.thumbnail}}" alt="{{this.title}}" class="product-image">
+            </li>
+            {{/each}}
+        </ul>
+    </main>
+    <script src="/js/main.js"></script>
 </body>
 </html>

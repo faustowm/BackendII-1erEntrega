@@ -1,113 +1,113 @@
 [
     {
       "id": "1",
-      "title": "Romantic Evening",
-      "description": "A soft, warm glow to set the mood",
+      "title": "Noche Romántica",
+      "description": "Una suave y cálida luz para crear ambiente",
       "price": 19.99,
-      "thumbnail": "https://example.com/candle1.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1508923567004-3a6b8004f3d9",
       "code": "VELA001",
       "stock": 20,
-      "status": "available",
-      "category": "Home Decor"
+      "status": "disponible",
+      "category": "Decoración del Hogar"
     },
     {
       "id": "2",
-      "title": "Fresh Cut Garden",
-      "description": "Invigorate your senses with the scent of fresh flowers",
+      "title": "Jardín Recien Cortado",
+      "description": "Vigoriza tus sentidos con el aroma de flores frescas",
       "price": 14.99,
-      "thumbnail": "https://example.com/candle2.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1553531888-15c5b3b9e8b0",
       "code": "VELA002",
       "stock": 15,
-      "status": "available",
-      "category": "Garden"
+      "status": "disponible",
+      "category": "Jardín"
     },
     {
       "id": "3",
-      "title": "Cozy Winter Night",
-      "description": "Warm up with the comforting aroma of vanilla and caramel",
+      "title": "Noche de Invierno Acogedora",
+      "description": "Caliéntate con el reconfortante aroma de vainilla y caramelo",
       "price": 24.99,
-      "thumbnail": "https://example.com/candle3.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1584171913001-3929d53f1d85",
       "code": "VELA003",
       "stock": 10,
-      "status": "available",
-      "category": "Winter"
+      "status": "disponible",
+      "category": "Invierno"
     },
     {
       "id": "4",
-      "title": "Beach Walk",
-      "description": "Escape to the coast with the refreshing scent of citrus",
+      "title": "Paseo por la Playa",
+      "description": "Escápate a la costa con el refrescante aroma de cítricos",
       "price": 17.99,
-      "thumbnail": "https://example.com/candle4.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1556761175-4b46a572b786",
       "code": "VELA004",
       "stock": 25,
-      "status": "available",
-      "category": "Summer"
+      "status": "disponible",
+      "category": "Verano"
     },
     {
       "id": "5",
-      "title": "Spiced Cranberry",
-      "description": "Get into the holiday spirit with this festive blend",
+      "title": "Arándano Especiado",
+      "description": "Entra en el espíritu festivo con esta mezcla festiva",
       "price": 19.99,
-      "thumbnail": "https://example.com/candle5.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1604881996531-fd7cad99b138",
       "code": "VELA005",
       "stock": 18,
-      "status": "available",
-      "category": "Holiday"
+      "status": "disponible",
+      "category": "Festividades"
     },
     {
       "id": "6",
-      "title": "Lavender Dreams",
-      "description": "Unwind with the calming scent of lavender",
+      "title": "Sueños de Lavanda",
+      "description": "Relájate con el calmante aroma de la lavanda",
       "price": 12.99,
-      "thumbnail": "https://example.com/candle6.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1616627458054-9f5417d51d2e",
       "code": "VELA006",
       "stock": 22,
-      "status": "available",
-      "category": "Wellness"
+      "status": "disponible",
+      "category": "Bienestar"
     },
     {
       "id": "7",
-      "title": "Fresh Baked Cookies",
-      "description": "Indulge in the sweet aroma of freshly baked treats",
+      "title": "Galletas Recién Horneadas",
+      "description": "Disfruta del dulce aroma de las galletas recién horneadas",
       "price": 16.99,
-      "thumbnail": "https://example.com/candle7.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1591090859708-b2baed151b3b",
       "code": "VELA007",
       "stock": 12,
-      "status": "available",
-      "category": "Foodie"
+      "status": "disponible",
+      "category": "Gourmet"
     },
     {
       "id": "8",
-      "title": "Midnight Forest",
-      "description": "Get lost in the mysterious scent of the forest at night",
+      "title": "Bosque de Medianoche",
+      "description": "Piérdete en el misterioso aroma del bosque por la noche",
       "price": 21.99,
-      "thumbnail": "https://example.com/candle8.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1549492423-ec9de3b1eeb4",
       "code": "VELA008",
       "stock": 20,
-      "status": "available",
-      "category": "Nature"
+      "status": "disponible",
+      "category": "Naturaleza"
     },
     {
       "id": "9",
-      "title": "Sunset Stroll",
-      "description": "Capture the essence of a warm summer evening",
+      "title": "Paseo al Atardecer",
+      "description": "Captura la esencia de una cálida tarde de verano",
       "price": 18.99,
-      "thumbnail": "https://example.com/candle9.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1542528180-1c540a34d956",
       "code": "VELA009",
       "stock": 15,
-      "status": "available",
-      "category": "Summer"
+      "status": "disponible",
+      "category": "Verano"
     },
     {
       "id": "10",
-      "title": "Winter Wonderland",
-      "description": "Experience the magic of the winter season",
+      "title": "Maravilla Invernal",
+      "description": "Experimenta la magia de la temporada invernal",
       "price": 25.99,
-      "thumbnail": "https://example.com/candle10.jpg",
+      "thumbnail": "https://images.unsplash.com/photo-1512311518126-6c0b7a1ed8fb",
       "code": "VELA010",
       "stock": 12,
-      "status": "available",
-      "category": "Winter"
+      "status": "disponible",
+      "category": "Invierno"
     }
   ]
   

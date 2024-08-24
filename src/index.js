@@ -7,9 +7,14 @@ import { Server } from "socket.io";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import productManager from './managers/productManager.js';  
+import usuariosRouter from "./routes/usuarios.router.js"
+import mongoose from "mongoose";
+
+
 
 const PORT = 8080;
 const app = express();
+
 
 // Obtener la ruta del directorio actual
 const __filename = fileURLToPath(import.meta.url);
@@ -23,10 +28,12 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({extended:true})) 
 
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/", viewsRouter);
+app.use("/usuarios", usuariosRouter)
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Escuchando en el puerto: ${PORT}`);
@@ -46,3 +53,8 @@ io.on("connection", async (socket) => {
     io.emit("productos", await productManager.getProducts());
   });
 });
+
+
+mongoose.connect("mongodb+srv://faustowm:coderhouse@cluster0.zx4tj.mongodb.net/InzaraAromas?retryWrites=true&w=majority&appName=Cluster0")
+  .then (() => console.log("Conexion exitosa"))
+  .catch (() => console.log ("No es posible conectarse"))

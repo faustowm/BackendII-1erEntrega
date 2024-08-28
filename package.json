@@ -1,16 +1,15 @@
 {
-<<<<<<< HEAD
-    "name": "backend-3erentrega",
+    "name": "backend-1erentrega",
     "type": "module",
     "version": "1.0.0",
-    "description": "Proyecto final Backend I - Inzara Aromas",
+    "description": "",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon src/app.js"
     },
     "keywords": [],
-    "author": "Fausto Monteroni",
+    "author": "",
     "license": "ISC",
     "dependencies": {
         "express": "^4.18.2",
@@ -23,27 +22,4 @@
     "devDependencies": {
         "nodemon": "^3.0.2"
     }
-=======
-  "name": "backend-3erentrega",
-  "version": "1.0.0",
-  "description": "Tercer entrega del proyecto Backend I - Inzara Aromas",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "nodemon src/index.js"
-  },
-  "keywords": [],
-  "author": "Fausto Andres Monteroni",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.19.2",
-    "express-handlebars": "^7.1.3",
-    "mongoose": "^8.5.4",
-    "socket.io": "^4.7.5",
-    "uuid": "^10.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.4"
-  }
->>>>>>> ada2af34472a88889c37c115ae0977fd61b34c56
 }

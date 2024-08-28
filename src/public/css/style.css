@@ -10,7 +10,6 @@ body {
 /* Header and navigation menu */
 header {
     background: linear-gradient(135deg, #4db6ac, #80deea);
-    /* Colores turquesa y celeste suaves */
     color: white;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -38,7 +37,6 @@ nav ul.nav-menu li a {
 
 nav ul.nav-menu li a:hover {
     color: #ffd54f;
-    /* Color de resaltado en el hover */
 }
 
 /* Main content area */

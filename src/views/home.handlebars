@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Velas</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
-    <header class="header">
-        <div></div>
-        <h1 class="header-title">Velitas - Productos Disponibles</h1>
-    </header>
-    <main class="main-content">
-        <ul class="product-list">
+<main>
+    <section class="intro">
+        <h1>Bienvenido a Insara Aromas</h1>
+        <p>En Insara Aromas, te ofrecemos una amplia variedad de velas aromáticas y productos relacionados para
+            llenar tu espacio de aromas agradables y relajantes. Nuestro catálogo incluye desde velas artesanales
+            hasta fragancias exclusivas para que encuentres el producto perfecto que se ajuste a tus gustos y
+            necesidades.</p>
+        <p>Explora nuestras categorías para descubrir nuestras ofertas especiales y productos de alta calidad que
+            harán que cada rincón de tu hogar se llene de magia y frescura.</p>
+    </section>
+
+    <section class="products">
+        <h2>Nuestros Productos</h2>
+        {{#if productos.length}}
+        <ul class="productsContainer">
             {{#each productos}}
             <li class="product-item">
                 <h2>{{this.title}}</h2>
@@ -23,7 +25,11 @@
             </li>
             {{/each}}
         </ul>
-    </main>
-    <script src="/js/main.js"></script>
+        {{else}}
+        <p>No hay productos disponibles en este momento.</p>
+        {{/if}}
+    </section>
+</main>
 </body>
+
 </html>

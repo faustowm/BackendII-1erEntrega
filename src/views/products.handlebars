@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Velas</title>
+</head>
+
+<body>
+    <header class="header">
+
+        <h1 class="header-title">Velitas - Productos Disponibles</h1>
+    </header>
+    <main class="main-content">
+        <ul class="product-list">
+            {{#each productos}}
+            <li class="product-item">
+                <h2>{{this.title}}</h2>
+                <p>{{this.description}}</p>
+                <p>Precio: ${{this.price}}</p>
+                <p>Stock: {{this.stock}}</p>
+                <img src="{{thumbnail}}" alt="{{this.title}}" class="product-image">
+                <a href="/products/{{this._id}}" class="info-button">+ info</a>
+                
+
+            </li>
+            {{/each}}
+        </ul>
+    </main>
+    {{!--
+    <script src="/js/main.js"></script> --}}
+</body>
+
+</html>

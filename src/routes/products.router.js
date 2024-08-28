@@ -1,107 +1,139 @@
-import { Router } from "express";
-import productManager from '../managers/productManager.js';
+import express from 'express';
+import CartManager from '../dao/db/cart-manager-db.js';
+import ProductManager from '../dao/db/product-manager-db.js';
 
-const productsRouter = Router();
+const router = express.Router();
+const cartManager = new CartManager();
+const productManager = new ProductManager();
 
-productsRouter.get("/", async (req, res) => {
-  try {
-    const { limit } = req.query;
-    const products = await productManager.getProducts();
-
-    if (limit) {
-      const limitedProducts = products.slice(0, limit);
-      return res.json(limitedProducts);
+// Ruta para obtener todos los productos con paginación, orden y filtrado
+router.get('/', async (req, res) => {
+    try {
+        const { limit, page, sort, query } = req.query;
+        const products = await productManager.getProducts({
+            limit: parseInt(limit, 10) || 10,
+            page: parseInt(page, 10) || 1,
+            sort,
+            query
+        });
+        res.json(products); // Asegúrate de devolver datos JSON
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).json({ message: 'Error fetching products' });
     }
-    return res.json(products);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("ERROR AL INTENTAR RECIBIR LOS PRODUCTOS");
-  }
 });
 
-productsRouter.get("/:pid", async (req, res) => {
-  try {
-    const { pid } = req.params;
-    const product = await productManager.getProductById(pid);
-    if (!product) {
-      // ------------------------------
-      return res.status(404).json(`PRODUCTO CON ID ${pid} NO ENCONTRADO`); //----------------------
-    } // ------------------------------
-    return res.json(product); //----------------------------
-  } catch (error) {
-    console.log(error);
-    res.send(`ERROR AL INTENTAR RECIBIR EL PRODUCTO CON ID ${pid}`);
-  }
+// Ruta para obtener un producto específico por ID
+router.get('/:pid', async (req, res) => {
+    const id = req.params.pid;
+
+    try {
+        const product = await productManager.getProductById(id);
+        if (!product) {
+            return res.status(404).json({
+                error: "Product not found"
+            });
+        }
+        res.json(product);
+    } catch (error) {
+        console.error("Error getting product", error);
+        res.status(500).json({
+            error: "Internal server error"
+        });
+    }
 });
 
-productsRouter.post("/", async (req, res) => {
-  try {
-    const {
-      title,
-      description,
-      price,
-      thumbnail,
-      code,
-      stock,
-      status,
-      category,
-    } = req.body;
-    const response = await productManager.addProduct({
-      title,
-      description,
-      price,
-      thumbnail,
-      code,
-      stock,
-      status,
-      category,
-    });
-    res.status(201).json(response); // ------------------------------------------------
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(`ERROR AL INTENTAR AGREGAR PRODUCTO`); // ----------------------------------
-  }
+// Ruta para agregar un producto
+router.post('/', async (req, res) => {
+    const newProduct = req.body;
+
+    try {
+        await productManager.addProduct(newProduct);
+        res.status(201).json({
+            message: "Product added successfully"
+        });
+    } catch (error) {
+        console.error("Error adding product", error);
+        res.status(500).json({
+            error: "Internal server error"
+        });
+    }
 });
 
-productsRouter.put("/:pid", async (req, res) => {
-  const { pid } = req.params;
-  try {
-    const {
-      title,
-      description,
-      price,
-      thumbnail,
-      code,
-      stock,
-      status,
-      category,
-    } = req.body;
-    const updateProduct = {
-      title,
-      description,
-      price,
-      thumbnail,
-      code,
-      stock,
-      status,
-      category,
-    }; // ---------------------------------------------------
-    const response = await productManager.updateProduct(pid, updateProduct); // ---------------
-    res.json(response);
-  } catch (error) {
-    res.status(500).send(`ERROR AL INTENTAR EDITAR PRODUCTO`);
-    console.log(error);
-  }
+// Ruta para actualizar un producto por ID
+router.put('/:pid', async (req, res) => {
+    const id = req.params.pid;
+    const updatedProduct = req.body;
+
+    try {
+        const updated = await productManager.updateProduct(id, updatedProduct);
+        if (!updated) {
+            return res.status(404).json({
+                message: "Product not found"
+            });
+        }
+        res.json({
+            message: "Product updated successfully"
+        });
+    } catch (error) {
+        console.error("Error updating product", error);
+        res.status(500).json({
+            error: "Internal server error"
+        });
+    }
 });
 
-productsRouter.delete("/:pid", async (req, res) => {
-  const { pid } = req.params;
-  try {
-    await productManager.deleteProduct(pid);
-    res.send(`PRODUCTO ELIMINADO EXITOSAMENTE`);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send(`ERROR AL INTENTAR ELIMINAR PRODUCTO CON ID ${pid}`); // ------------------------------
-  }
+// Ruta para eliminar un producto por ID
+router.delete('/:pid', async (req, res) => {
+    const id = req.params.pid;
+
+    try {
+        const deleted = await productManager.deleteProduct(id);
+        if (!deleted) {
+            return res.status(404).json({
+                message: "Product not found"
+            });
+        }
+        res.json({
+            message: "Product deleted successfully"
+        });
+    } catch (error) {
+        console.error("Error deleting product", error);
+        res.status(500).json({
+            error: "Internal server error"
+        });
+    }
 });
-export { productsRouter };
+
+// Ruta para agregar un producto al carrito
+router.post('/addProduct', async (req, res) => {
+    const { productId, cartId } = req.body;
+
+    if (!productId || !cartId) {
+        return res.status(400).json({ error: 'Product ID and Cart ID are required' });
+    }
+
+    try {
+        // Verificar si el carrito existe
+        const cart = await cartManager.getCartById(cartId);
+        if (!cart) {
+            return res.status(404).json({ error: 'Cart not found' });
+        }
+
+        // Verificar si el producto existe
+        const product = await productManager.getProductById(productId);
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        // Agregar producto al carrito
+        await cartManager.addProductToCart(cartId, productId);
+
+        res.status(200).json({ message: 'Product added to cart' });
+    } catch (error) {
+        console.error('Error adding product to cart:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+export default router;

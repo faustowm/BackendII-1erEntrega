@@ -1,14 +1,14 @@
 {
-  "name": "backend-1erentrega",
+  "name": "backend-3erentrega",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tercer entrega del proyecto Backend I - Inzara Aromas",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fausto Andres Monteroni",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",

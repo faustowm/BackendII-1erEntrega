@@ -1,15 +1,15 @@
 {
-    "name": "backend-1erentrega",
+    "name": "backend2-1erentrega",
     "type": "module",
     "version": "1.0.0",
-    "description": "",
+    "description": "Primer entrega de backen2",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "nodemon src/app.js"
     },
     "keywords": [],
-    "author": "",
+    "author": "Monteroni Fausto",
     "license": "ISC",
     "dependencies": {
         "express": "^4.18.2",

@@ -55,30 +55,6 @@ router.get('/carts/:cid', async (req, res) => {
     }
 });
 
-// Ruta para obtener todos los carritos en formato JSON
-// router.get('/api/carts', async (req, res) => {
-//     try {
-//         const carts = await cartManager.getAllCarts();
-
-//         // Estructura los datos para que incluyan la cantidad total de productos en cada carrito
-//         const cartData = carts.map(cart => ({
-//             id: cart._id,
-//             products: cart.products.map(item => ({
-//                 id: item.productId._id,
-//                 title: item.productId.title,
-//                 price: item.productId.price,
-//                 quantity: item.quantity
-//             })),
-//             totalQuantity: cart.products.reduce((total, item) => total + item.quantity, 0)
-//         }));
-
-//         res.json(cartData);
-//     } catch (error) {
-//         console.error('Error retrieving carts:', error);
-//         res.status(500).json({ message: 'Internal server error' });                           
-//     }
-// });
-
 router.get('/api/carts', async (req, res) => {
     try {
         const carts = await cartManager.getAllCarts();

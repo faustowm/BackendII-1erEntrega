@@ -1,113 +1,100 @@
-import express from 'express';
-import exphbs from 'express-handlebars';
-import productsRouter from './routes/products.router.js';
-import cartsRouter from './routes/carts.router.js';
-import viewsRouter from './routes/views.router.js';
-import http from 'http';
-import { Server } from 'socket.io';
-import './database.js';
-import ProductManager from './dao/db/product-manager-db.js';
-import bodyParser from 'body-parser'; // Importar body-parser usando ES Modules
+import express from "express";
+import passport from "passport";
+import cookieParser from "cookie-parser";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import initializePassport from "./config/passport.config.js";
+import { engine } from "express-handlebars";
+import { Server } from "socket.io";
+import config from './config/config.js';
+import productsRouter from "./routes/products.routes.js";
+import cartRouter from "./routes/cart.routes.js";
+import userRouter from "./routes/user.routes.js";
+import orderRouter from "./routes/order.routes.js";
+import viewsRouter from "./routes/views.routes.js";
+import sessionRouter from "./routes/session.routes.js";
+import { errorHandler, notFoundHandler } from "./middlewares/error.middleware.js";
+import ProductManager from './dao/db/productManagerDb.js';
+import { fileURLToPath } from 'url'; 
 import path from 'path';
-import { fileURLToPath } from 'url';
+import "./db.js";
 
-// Función para obtener el __dirname en módulos ES
+const app = express();
+const productManager = new ProductManager();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = process.env.PORT || 8080;
-const app = express();
-const httpServer = http.createServer(app);
-const io = new Server(httpServer);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("./src/public"));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(cookieParser());
 
-// Configuración de Handlebars
-const hbs = exphbs.create({
-    defaultLayout: 'main',
-    layoutsDir: path.join(__dirname, 'views/layouts'),
+// Configuración de la sesión
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: config.mongodbUri,
+        ttl: 60 * 60 // 1 hora
+    }),
+    secret: config.sessionSecret,
+    resave: false,
+    saveUninitialized: false
+}));
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.engine('handlebars', engine({
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
         allowProtoMethodsByDefault: true,
+    },
+    helpers: {
+        formatNumber: (number, decimals = 2) => {
+            if (number === null || number === undefined || isNaN(number)) {
+                return 'N/A';
+            }
+            return Number(number).toFixed(decimals);
+        },
+        eq: (v1, v2) => v1 === v2,
+        or: (v1, v2) => v1 || v2,
+        and: (v1, v2) => v1 && v2,
+        not: v => !v,
+        ternary: (cond, v1, v2) => cond ? v1 : v2,
     }
-});
-
-app.engine('handlebars', hbs.engine);
+}));
 app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', 'src/views');
 
-// Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Ruta correcta para servir archivos estáticos
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
-// Middleware para manejar JSON y datos del cuerpo de las solicitudes
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Registrar el helper para calcular el precio total
-hbs.handlebars.registerHelper('calculateTotalPrice', function (products) {
-    let total = 0;
-    products.forEach(product => {
-        total += product.quantity * product.product.price;
-    });
-    return total;
-});
-
-// Montar routers de API
-
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
-
-// Montar rutas de vistas
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartRouter);
+app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
+app.use('/api/sessions', sessionRouter);
 app.use('/', viewsRouter);
 
-app.use('/favicon.ico', (req, res) => res.status(204).end());
+app.use(notFoundHandler);
+app.use(errorHandler);
 
-// Manejo de WebSocket para actualizaciones en tiempo real
-io.on('connection', (socket) => {
-    console.log('New client connected');
+const httpServer = app.listen(config.port, () => {
+    console.log(`Server running on port http://localhost:${config.port}`);
+});
 
-    socket.on('sortProducts', async (data) => {
-        const { sort } = data;
-        try {
-            const products = await ProductManager.getProducts();
-            const sortedProducts = products.sort((a, b) => {
-                if (sort === 'asc') {
-                    return a.price - b.price;
-                } else if (sort === 'desc') {
-                    return b.price - a.price;
-                } else {
-                    return 0;
-                }
-            });
-            socket.emit('updateProducts', sortedProducts);
-        } catch (error) {
-            console.error('Error sorting products:', error);
-            socket.emit('updateProducts', { error: 'Error al obtener productos' });
-        }
-    });
+const io = new Server(httpServer);
 
-    socket.on('disconnect', () => {
-        console.log('Client disconnected');
+io.on("connection", async (socket) => {
+    console.log("Nuevo cliente conectado");
+
+    const initialProducts = await productManager.getProducts(1, 15);
+    socket.emit('products', initialProducts);
+
+    socket.on('requestPage', async ({ page, limit, sort }) => {
+        const products = await productManager.getProducts(page, limit, sort);
+        socket.emit('products', products);
     });
 });
 
-// Iniciar servidor
-httpServer.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
-
-// Manejo de rutas no encontradas
-app.get('*', (req, res) => {
-    res.status(400).send('Route not found');
-});
-
-app.get('/home', async (req, res) => {
-    try {
-        const productos = await ProductManager.getProducts(); // Ajusta el método según tu lógica
-        res.render('home', { productos });
-    } catch (error) {
-        res.status(500).send('Error al obtener productos');
-    }
-});
-
-
+export default app;

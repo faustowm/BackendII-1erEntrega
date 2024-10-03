@@ -1,36 +1,74 @@
-<!DOCTYPE html>
-<html lang="es">
+<div class="cenpro" style="display: flex;flex-direction: column;align-items: center;">
+    <h1 class="main-title">Nuestros Productos</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Velas</title>
-</head>
+    <div class="product-grid">
+        {{#each products}}
+        <div class="product-card">
+            <img src="{{this.img}}" alt="{{this.name}}">
+            <div class="product-info" style="display: flex;flex-direction: column;align-items: center;">
+                <h3>{{this.name}}</h3>
+                <p class="price">${{this.price}}</p>
+                <div class="product-buttons" style="margin-bottom:20px;">
+                    <button
+                    <a href="/products/{{this._id}}" class="btn btn-primary">Ver más</a>
+                    </button>
+                    <button class="btn btn-primary add-to-cart" data-id="{{this._id}}">
+                        <i class="fas fa-shopping-cart"></i> Añadir al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
 
-<body>
-    <header class="header">
 
-        <h1 class="header-title">Velitas - Productos Disponibles</h1>
-    </header>
-    <main class="main-content">
-        <ul class="product-list">
-            {{#each productos}}
-            <li class="product-item">
-                <h2>{{this.title}}</h2>
-                <p>{{this.description}}</p>
-                <p>Precio: ${{this.price}}</p>
-                <p>Stock: {{this.stock}}</p>
-                <img src="{{thumbnail}}" alt="{{this.title}}" class="product-image">
-                <a href="/products/{{this._id}}" class="info-button">+ info</a>
-                
+    <div class="pagination">
+        {{#if pagination.hasPrevPage}}
+        <a href="?page={{pagination.prevPage}}&limit=3&sort={{sort}}" class="btn">
+            <i class="fas fa-chevron-left"></i> Anterior
+        </a>
+        {{/if}}
 
-            </li>
-            {{/each}}
-        </ul>
-    </main>
-    {{!--
-    <script src="/js/main.js"></script> --}}
-</body>
+        {{#each pagination.pages}}
+        <a href="?page={{this}}&limit=3&sort={{../sort}}"
+            class="btn {{#if (eq this ../pagination.page)}}active{{/if}}">{{this}}</a>
+        {{/each}}
 
-</html>
+        {{#if pagination.hasNextPage}}
+        <a href="?page={{pagination.nextPage}}&limit=3&sort={{sort}}" class="btn">
+            Siguiente <i class="fas fa-chevron-right"></i>
+        </a>
+        {{/if}}
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', async function() {
+                const productId = this.getAttribute('data-id');
+                try {
+                    const response = await fetch('/api/carts/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ productId, quantity: 1 }),
+                    });
+                    if (response.ok) {
+                        alert('Producto añadido al carrito');
+                        if (typeof checkAuth === 'function') {
+                            checkAuth(); // Actualiza el contador del carrito si la función existe
+                        }
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Error al añadir al carrito');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(error.message);
+                }
+            });
+        });
+    });
+</script>
